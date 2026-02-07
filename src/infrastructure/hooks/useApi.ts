@@ -96,12 +96,7 @@ const useMutationApi = <TRequest = void, TResponse = unknown>(
     },
     onSuccess: (data: TResponse, variables: TRequest, context: ApiConfig<TResponse, TRequest> | undefined) => {
       if (options.onSuccess) {
-        options.onSuccess(
-          data,
-          variables,
-          context || ({} as ApiConfig<TResponse, TRequest>),
-          undefined // 👈 thêm cái này
-        )
+        options.onSuccess(data, variables, context || ({} as ApiConfig<TResponse, TRequest>))
       }
     }
   })
