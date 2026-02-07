@@ -1,6 +1,7 @@
 import useAxios from '@/infrastructure/hooks/useAxios'
 import { buildUrl } from '@/shared/url'
 import { type MutationOptions, type UseQueryOptions, useMutation, useQuery } from '@tanstack/react-query'
+import { AnyARecord } from 'node:dns'
 
 export interface ApiError {
   message: string
@@ -94,9 +95,14 @@ const useMutationApi = <TRequest = void, TResponse = unknown>(
         context
       )
     },
-    onSuccess: (data: TResponse, variables: TRequest, context: ApiConfig<TResponse, TRequest> | undefined) => {
+    onSuccess: (
+      data: TResponse,
+      variables: TRequest,
+      context: ApiConfig<TResponse, TRequest> | undefined,
+      options: any
+    ) => {
       if (options.onSuccess) {
-        options.onSuccess(data, variables, context || ({} as ApiConfig<TResponse, TRequest>))
+        options.onSuccess(data, variables, context || ({} as ApiConfig<TResponse, TRequest>, options))
       }
     }
   })
